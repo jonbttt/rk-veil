@@ -156,10 +156,11 @@ This rootkit is detectable by:
 
 | Technique | ID | Implementation in rk-veil |
 |---|---|---|
-| Rootkit | T1014 | Module self-hiding, process concealment, in-kernel credential overwrite |
+| Rootkit | T1014 | Module self-hiding, process concealment, in-kernel credential swap |
 | Kernel Modules and Extensions | T1547.006 | LKM loaded via insmod; unlinks from module list and deletes kobject |
 | Hide Artifacts: Hidden Files and Directories | T1564.001 | getdents64 hook filters directory entries by prefix |
-| Impair Defenses: Disable or Modify Tools | T1562.001 | Syscall hooks corrupt output of ls, ps, lsmod without modifying the binaries |
+| Hide Artifacts (process concealment) | T1564 | execve hook maintains hidden PID list; no dedicated Linux sub-technique |
+| Rootkit: credential swap | T1014 | kill hook on signal 64 calls commit_creds with elevated cred set |
 
 ### Detection Data Sources
 
