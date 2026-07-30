@@ -152,11 +152,32 @@ This rootkit is detectable by:
 
 ---
 
+## MITRE ATT&CK Mapping
+
+| Technique | ID | Implementation in rk-veil |
+|---|---|---|
+| Rootkit | T1014 | Module self-hiding, process concealment, in-kernel credential overwrite |
+| Kernel Modules and Extensions | T1547.006 | LKM loaded via insmod; unlinks from module list and deletes kobject |
+| Hide Artifacts: Hidden Files and Directories | T1564.001 | getdents64 hook filters directory entries by prefix |
+| Impair Defenses: Disable or Modify Tools | T1562.001 | Syscall hooks corrupt output of ls, ps, lsmod without modifying the binaries |
+
+### Detection Data Sources
+
+| Data Source | ID | Detection Approach |
+|---|---|---|
+| Kernel: Kernel Module Load | DS0008 | Trace module load events at insmod time |
+| Process: OS API Execution | DS0009 | bpftrace on hooked syscalls; compare handler address against kallsyms |
+| File: File Metadata | DS0022 | readdir vs stat mismatch on hidden paths |
+
+*process hiding has no dedicated sub-technique on Linux, so it maps to T1014
+
+---
+
 ## References
 
 - [xcellerator's Linux Rootkits series](https://xcellerator.github.io/posts/linux_rootkits_01/)
 - [Linux Kernel Module Programming Guide](https://sysprog21.github.io/lkmpg/)
-- [Caraxes — academic LKM rootkit](https://github.com/ait-aecid/caraxes)
+- [Caraxes - ftrace rootkit](https://github.com/ait-aecid/caraxes)
 
 ---
 
